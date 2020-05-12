@@ -1,6 +1,5 @@
 
 function getData() {
-  var ctx = $('#vendite');
   $.ajax({
     url: "API/server.php",
     method: 'GET',
@@ -19,7 +18,7 @@ function graphFatturatoConfig(data) {
   var months = moment.months();
   var fatturatoType = data['fatturato']['type'];
   var fatturatoData = data['fatturato']['data'];
-  var fatturatoGraph = '#vendite'
+  var fatturatoHtmlGraph = '#vendite'
   var colors = ['rgba(1,128,1)'];
   var options = {
     scales: {
@@ -35,7 +34,7 @@ function graphFatturatoConfig(data) {
       }]
     }
   };
-  printChart(fatturatoType, fatturatoData, months, fatturatoGraph, colors, options);
+  printChart(fatturatoType, fatturatoData, months, fatturatoHtmlGraph, colors, options);
 };
 
 
@@ -43,14 +42,14 @@ function graphByAgentConfig(data) {
   var byAgentType = data['fatturato_by_agent']['type'];
   var byAgentData = data['fatturato_by_agent']['data'];
   var names = data['fatturato_by_agent']['labels'];
-  var byAgentGraph = '#agents'
+  var byAgentHtmlGraph = '#agents'
   var colors = [
     'rgba(150, 33, 146, 1)',
     'rgba(82, 40, 204, 1)',
     'rgba(4, 51, 255, 1)',
     'rgba(0, 146, 146, 1)'
   ];
-  printChart(byAgentType, byAgentData, names, byAgentGraph, colors);
+  printChart(byAgentType, byAgentData, names, byAgentHtmlGraph, colors);
 };
 
 
