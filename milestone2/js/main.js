@@ -1,7 +1,7 @@
 
 function getData() {
   $.ajax({
-    url: "API/server.php",
+    url: "api/server.php",
     method: 'GET',
     success: function (data) {
       graphFatturatoConfig(data);
@@ -77,7 +77,6 @@ function printChart(type, data, labels, graphSelection, colors, options) {
 function init() {
   getData();
   moment.locale('it');
-
 }
 
 $(document).ready(init);

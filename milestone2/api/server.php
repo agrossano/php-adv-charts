@@ -6,18 +6,13 @@ include __DIR__. '/database.php';
 
 $fatturatoAgent = ($graphs['fatturato_by_agent']['data']);
 
-
 foreach ($fatturatoAgent as $key => $value) {
   $dataAgents[] = ($value);
   $nameAgents[] = ($key);
 }
 
-//$fatturatoArr = $graphs['fatturato'];
-//$firstGraph['fatturato'] = $graphs['fatturato'] ;
-
 $graphs['fatturato_by_agent']['data'] = $dataAgents;
 $graphs['fatturato_by_agent']['labels'] = $nameAgents;
-
 
 echo json_encode($graphs);
 ?>
