@@ -5,6 +5,10 @@ header('Content-Type: application/json');
 include __DIR__. '/database.php';
 
 
+$graphs = arrFatturatoAgents($graphs);
+$graphs = arrTeamEfficiency($graphs);
+
+
 function arrFatturatoAgents($graphs) {
   $fatturatoAgent = ($graphs['fatturato_by_agent']['data']);
 
@@ -17,6 +21,7 @@ function arrFatturatoAgents($graphs) {
   $graphs['fatturato_by_agent']['labels'] = $nameAgents;
   return $graphs;
 };
+
 
 function arrTeamEfficiency($graphs) {
   $teamEfficiency = ($graphs['team_efficiency']['data']);
@@ -31,8 +36,19 @@ function arrTeamEfficiency($graphs) {
   return $graphs;
 };
 
+$level = $_GET['level'];
 
-$graphs = arrFatturatoAgents($graphs);
-$graphs = arrTeamEfficiency($graphs);
-echo json_encode($graphs);
+if ($level === 'guest') {
+  unset($graphs['team_efficiency']);
+  unset($graphs['fatturato_by_agent']);
+  echo json_encode($graphs);
+} elseif ($level ==='employee') {
+  unset($graphs['team_efficiency']);
+  echo json_encode($graphs);
+} elseif ($level ==='clevel') {
+  echo json_encode($graphs);
+}
+
+
+
 ?>

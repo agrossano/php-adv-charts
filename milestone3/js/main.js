@@ -1,12 +1,23 @@
 
-function getData() {
+function getData(level) {
+  console.log(level)
   $.ajax({
-    url: "api/server.php",
+    url: "api/server.php/?",
     method: 'GET',
+    data: {
+      level: level
+    },
     success: function (data) {
-      graphFatturatoConfig(data);
-      graphByAgentConfig(data);
-      graphTeamEfficiencyConfig(data);
+      if (level === 'guest') {
+        graphFatturatoConfig(data);
+      } else if (level === 'employee') {
+        graphFatturatoConfig(data);
+        graphByAgentConfig(data);
+      } else if (level === 'clevel') {
+        graphFatturatoConfig(data);
+        graphByAgentConfig(data);
+        graphTeamEfficiencyConfig(data)
+      }
     },
     error: function (error) {
       alert('error')
@@ -120,9 +131,22 @@ function printChartEfficiency(type, data, labels, graphSelection, months) {
 }
 
 
+function checkLevel() {
+  var url_string = window.location.href
+  var url = new URL(url_string);
+  var level = url.searchParams.get("level");
+  if (level === 'guest' || level === 'employee' || level === 'clevel') {
+    getData(level);
+  } else {
+    alert('ACCESSO NON CONSENTITO')
+  }
+
+}
+
+
 function init() {
-  getData();
   moment.locale('it');
+  access = checkLevel();
 }
 
 $(document).ready(init);
