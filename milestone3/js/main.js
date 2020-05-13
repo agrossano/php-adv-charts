@@ -23,7 +23,6 @@ function getData(level) {
   });
 }
 
-
 function graphFatturatoConfig(data) {
   var months = moment.months();
   var fatturatoHtmlGraph = '#vendite'
@@ -31,7 +30,8 @@ function graphFatturatoConfig(data) {
   var options = {
     scales: {
       xAxes: [{
-        ticks: {
+        ticks:
+        {
           minRotation: 45,
         }
       }],
@@ -42,33 +42,27 @@ function graphFatturatoConfig(data) {
       }]
     }
   };
-  printChart(data['fatturato'], months, fatturatoHtmlGraph, colors, options, months);
+  printChart(data.fatturato, fatturatoHtmlGraph, months, colors, options, months);
+  console.log(data.fatturato)
 };
 
 
 function graphByAgentConfig(data) {
   var byAgentHtmlGraph = '#agents'
-  var colors = [
-    'rgba(150, 33, 146, 1)',
-    'rgba(82, 40, 204, 1)',
-    'rgba(4, 51, 255, 1)',
-    'rgba(0, 146, 146, 1)'
-  ];
-  printChart(data['fatturato_by_agent'], data.fatturato_by_agent.labels, byAgentHtmlGraph, colors);
+  var colors = ['rgba(150, 33, 146, 1)', 'rgba(82, 40, 204, 1)', 'rgba(4, 51, 255, 1)', 'rgba(0, 146, 146, 1)'];
+  printChart(data.fatturato_by_agent, byAgentHtmlGraph, data.fatturato_by_agent.labels, colors);
 };
 
 
 function graphTeamEfficiencyConfig(data) {
+  console.log(data)
   var months = moment.months();
-  var teamEfficiencyType = data['team_efficiency']['type'];
-  var teamEfficiencyData = data['team_efficiency']['data'];
-  var teamLabel = data['team_efficiency']['labels'];
   var teamEfficiencyHtmlGraph = '#efficiency'
-  printChartEfficiency(teamEfficiencyType, teamEfficiencyData, teamLabel, teamEfficiencyHtmlGraph, months)
+  printChartEfficiency(data.team_efficiency, teamEfficiencyHtmlGraph, months)
 }
 
 
-function printChart(data, labels, graphSelection, colors, options, ) {
+function printChart(data, graphSelection, labels, colors, options) {
   var ctx = $(graphSelection);
   var myChart = new Chart(ctx, {
     type: data.type,
@@ -88,53 +82,46 @@ function printChart(data, labels, graphSelection, colors, options, ) {
   });
 }
 
-function printChartEfficiency(type, data, labels, graphSelection, months) {
+
+function printChartEfficiency(data, graphSelection, months) {
   var ctx = $(graphSelection);
   var myChart = new Chart(ctx, {
-    type: type,
+    type: data.type,
     data: {
       labels: months,
       datasets: [{
-        label: labels[0],
-        data: data[0],
-        borderColor: [
-          'rgba(26,26,177)',
-        ],
+        label: data.labels[0],
+        data: data.data[0],
+        borderColor: ['rgba(26,26,177)',],
         borderWidth: 3
       },
       {
-        label: labels[1],
-        data: data[1],
-        borderColor: [
-          'rgba(17,101,23)',
-        ],
+        label: data.labels[1],
+        data: data.data[1],
+        borderColor: ['rgba(17,101,23)',],
         borderWidth: 3
       },
       {
-        label: labels[2],
-        data: data[2],
-        borderColor: [
-          'rgba(197,153,67)',
-        ],
+        label: data.labels[2],
+        data: data.data[2],
+        borderColor: ['rgba(197,153,67)',],
         borderWidth: 3
       }]
     },
   });
 }
 
-
 function checkLevel() {
   var url_string = window.location.href
   var url = new URL(url_string);
   var level = url.searchParams.get("level");
-  if (level === 'guest' || level === 'employee' || level === 'clevel') {
-    getData(level);
-  } else {
-    alert('ACCESSO NON CONSENTITO')
-  }
-
+  getData(level);
+  /*   if (level === 'guest' || level === 'employee' || level === 'clevel') {
+      
+    } else {
+      alert('ACCESSO NON CONSENTITO')
+    } */
 }
-
 
 function init() {
   moment.locale('it');
