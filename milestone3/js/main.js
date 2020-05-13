@@ -6,16 +6,7 @@ function getData(level) {
       level: level
     },
     success: function (data) {
-      if (level === 'guest') {
-        graphFatturatoConfig(data);
-      } else if (level === 'employee') {
-        graphFatturatoConfig(data);
-        graphByAgentConfig(data);
-      } else {
-        graphFatturatoConfig(data);
-        graphByAgentConfig(data);
-        graphTeamEfficiencyConfig(data)
-      }
+      checkAccess(data, level);
     },
     error: function (error) {
       alert('error')
@@ -43,7 +34,6 @@ function graphFatturatoConfig(data) {
     }
   };
   printChart(data.fatturato, fatturatoHtmlGraph, months, colors, options, months);
-  console.log(data.fatturato)
 };
 
 
@@ -113,12 +103,24 @@ function printChartEfficiency(data, graphSelection, months) {
 
 function checkLevel() {
   var url_string = window.location.href
-  console.log(url_string)
   var url = new URL(url_string);
-  console.log(url)
   var level = url.searchParams.get("level");
   getData(level);
 }
+
+function checkAccess(data, level) {
+  if (level === 'guest') {
+    graphFatturatoConfig(data);
+  } else if (level === 'employee') {
+    graphFatturatoConfig(data);
+    graphByAgentConfig(data);
+  } else {
+    graphFatturatoConfig(data);
+    graphByAgentConfig(data);
+    graphTeamEfficiencyConfig(data)
+  }
+}
+
 
 function init() {
   moment.locale('it');
