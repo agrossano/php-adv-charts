@@ -113,7 +113,9 @@ function printChartEfficiency(data, graphSelection, months) {
 
 function checkLevel() {
   var url_string = window.location.href
+  console.log(url_string)
   var url = new URL(url_string);
+  console.log(url)
   var level = url.searchParams.get("level");
   getData(level);
 }
