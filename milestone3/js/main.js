@@ -116,11 +116,6 @@ function checkLevel() {
   var url = new URL(url_string);
   var level = url.searchParams.get("level");
   getData(level);
-  /*   if (level === 'guest' || level === 'employee' || level === 'clevel') {
-      
-    } else {
-      alert('ACCESSO NON CONSENTITO')
-    } */
 }
 
 function init() {
