@@ -47,7 +47,19 @@ function graphByAgentConfig(data) {
 function graphTeamEfficiencyConfig(data) {
   var months = moment.months();
   var teamEfficiencyHtmlGraph = '#efficiency'
-  printChartEfficiency(data.team_efficiency, teamEfficiencyHtmlGraph, months)
+  var borderColor = ["borderColor"]
+  var borderColor0 = ['rgba(26,26,177)',]; var borderColor1 = ['rgba(17,101,23)']; var borderColor2 = ['rgba(197,153,67)'];
+  var datasets = [];
+  for (var i = 0; i < data.team_efficiency.labels.length; i++) {
+    datasets.push({
+      label: data.team_efficiency.labels[i],
+      data: data.team_efficiency.data[i],
+      borderColor: eval(borderColor + i)
+    })
+  }
+
+  console.log(datasets)
+  printChartEfficiency(data.team_efficiency, teamEfficiencyHtmlGraph, months, datasets)
 }
 
 
@@ -61,9 +73,7 @@ function printChart(data, graphSelection, labels, colors, options) {
         label: 'Vendite',
         data: data.data,
         backgroundColor: colors,
-        borderColor: [
-          'rgba(211,40,52)',
-        ],
+        borderColor: ['rgba(211,40,52)'],
         borderWidth: 3
       }]
     },
@@ -72,30 +82,13 @@ function printChart(data, graphSelection, labels, colors, options) {
 }
 
 
-function printChartEfficiency(data, graphSelection, months) {
+function printChartEfficiency(data, graphSelection, months, datasets) {
   var ctx = $(graphSelection);
   var myChart = new Chart(ctx, {
     type: data.type,
     data: {
       labels: months,
-      datasets: [{
-        label: data.labels[0],
-        data: data.data[0],
-        borderColor: ['rgba(26,26,177)',],
-        borderWidth: 3
-      },
-      {
-        label: data.labels[1],
-        data: data.data[1],
-        borderColor: ['rgba(17,101,23)',],
-        borderWidth: 3
-      },
-      {
-        label: data.labels[2],
-        data: data.data[2],
-        borderColor: ['rgba(197,153,67)',],
-        borderWidth: 3
-      }]
+      datasets: datasets
     },
   });
 }
@@ -119,8 +112,6 @@ function checkAccess(data) {
     graphFatturatoConfig(data);
   }
 }
-
-
 
 
 function init() {
