@@ -4,14 +4,29 @@
   padding: 0;
 }
 
+body {
+  background: linear-gradient(
+    to left bottom,
+    #b8cceb,
+    #a9d9ec,
+    #aae3e1,
+    #bee9d1,
+    #deebc4
+  );
+}
+
 .container {
   display: flex;
   align-items: center;
-  flex-direction: column;
+  height: 100vh;
 }
 
 .row {
-  width: 900px;
-  height: auto;
-  padding: 50px;
+  width: calc(100vw / 3);
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
 }

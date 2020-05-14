@@ -17,7 +17,7 @@ function getData(level) {
 function graphFatturatoConfig(data) {
   var months = moment.months();
   var fatturatoHtmlGraph = '#vendite'
-  var colors = ['rgba(1,128,1)'];
+  var colors = ['#81b29a'];
   var options = {
     scales: {
       xAxes: [{
@@ -36,13 +36,11 @@ function graphFatturatoConfig(data) {
   printChart(data.fatturato, fatturatoHtmlGraph, months, colors, options, months);
 };
 
-
 function graphByAgentConfig(data) {
   var byAgentHtmlGraph = '#agents'
-  var colors = ['rgba(150, 33, 146, 1)', 'rgba(82, 40, 204, 1)', 'rgba(4, 51, 255, 1)', 'rgba(0, 146, 146, 1)'];
+  var colors = ['#FF6384', '#36A2EB', '#FFCE56', 'rgba(0, 146, 146, 0.5)'];
   printChart(data.fatturato_by_agent, byAgentHtmlGraph, data.fatturato_by_agent.labels, colors);
 };
-
 
 function graphTeamEfficiencyConfig(data) {
   var months = moment.months();
@@ -54,14 +52,14 @@ function graphTeamEfficiencyConfig(data) {
     datasets.push({
       label: data.team_efficiency.labels[i],
       data: data.team_efficiency.data[i],
-      borderColor: eval(borderColor + i)
+      borderColor: eval(borderColor + i),
+      fillColor: "rgba(41, 128, 185, 0.5)",
     })
   }
 
   console.log(datasets)
   printChartEfficiency(data.team_efficiency, teamEfficiencyHtmlGraph, months, datasets)
 }
-
 
 function printChart(data, graphSelection, labels, colors, options) {
   var ctx = $(graphSelection);
@@ -73,14 +71,12 @@ function printChart(data, graphSelection, labels, colors, options) {
         label: 'Vendite',
         data: data.data,
         backgroundColor: colors,
-        borderColor: ['rgba(211,40,52)'],
-        borderWidth: 3
+        hoverBackgroundColor: ["#FF4394", "#36A2EB", "#FFCE56"]
       }]
     },
     options: options
   });
 }
-
 
 function printChartEfficiency(data, graphSelection, months, datasets) {
   var ctx = $(graphSelection);
@@ -112,7 +108,6 @@ function checkAccess(data) {
     graphFatturatoConfig(data);
   }
 }
-
 
 function init() {
   getUrlLevel();
