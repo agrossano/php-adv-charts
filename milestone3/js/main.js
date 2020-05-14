@@ -17,7 +17,7 @@ function getData(level) {
 function graphFatturatoConfig(data) {
   var months = moment.months();
   var fatturatoHtmlGraph = '#vendite'
-  var colors = ['#81b29a'];
+  var colors = ['#2ec4b6'];
   var options = {
     scales: {
       xAxes: [{
@@ -38,7 +38,7 @@ function graphFatturatoConfig(data) {
 
 function graphByAgentConfig(data) {
   var byAgentHtmlGraph = '#agents'
-  var colors = ['#FF6384', '#36A2EB', '#FFCE56', 'rgba(0, 146, 146, 0.5)'];
+  var colors = ['#FF6384', '#36A2EB', '#FFCE56', 'rgba(0, 146, 146, 1)'];
   printChart(data.fatturato_by_agent, byAgentHtmlGraph, data.fatturato_by_agent.labels, colors);
 };
 
@@ -54,6 +54,7 @@ function graphTeamEfficiencyConfig(data) {
       data: data.team_efficiency.data[i],
       borderColor: eval(borderColor + i),
       fillColor: "rgba(41, 128, 185, 0.5)",
+      backgroundColor: "rgba(41, 128, 185, 0.3"
     })
   }
 
