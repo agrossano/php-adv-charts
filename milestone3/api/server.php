@@ -37,6 +37,9 @@ function arrTeamEfficiency($graphs) {
 };
 
 $level = $_GET['level'];
+if (!$level) {
+   $level = 'guest';
+}
 
 if ($level === 'guest') {
   unset($graphs['team_efficiency']);

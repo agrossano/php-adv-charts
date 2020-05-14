@@ -6,7 +6,7 @@ function getData(level) {
       level: level
     },
     success: function (data) {
-      checkAccess(data, level);
+      checkAccess(data);
     },
     error: function (error) {
       alert('error')
@@ -45,7 +45,6 @@ function graphByAgentConfig(data) {
 
 
 function graphTeamEfficiencyConfig(data) {
-  console.log(data)
   var months = moment.months();
   var teamEfficiencyHtmlGraph = '#efficiency'
   printChartEfficiency(data.team_efficiency, teamEfficiencyHtmlGraph, months)
@@ -101,30 +100,32 @@ function printChartEfficiency(data, graphSelection, months) {
   });
 }
 
-function checkLevel() {
-  var url_string = window.location.href
+function getUrlLevel() {
+  var url_string = window.location;
   var url = new URL(url_string);
   var level = url.searchParams.get("level");
   getData(level);
 }
 
-function checkAccess(data, level) {
-  if (level === 'guest') {
-    graphFatturatoConfig(data);
-  } else if (level === 'employee') {
-    graphFatturatoConfig(data);
-    graphByAgentConfig(data);
-  } else {
+function checkAccess(data) {
+  if (data.team_efficiency) {
     graphFatturatoConfig(data);
     graphByAgentConfig(data);
     graphTeamEfficiencyConfig(data)
+  } else if (data.fatturato_by_agent) {
+    graphFatturatoConfig(data);
+    graphByAgentConfig(data);
+  } else if (data.fatturato) {
+    graphFatturatoConfig(data);
   }
 }
 
 
+
+
 function init() {
+  getUrlLevel();
   moment.locale('it');
-  access = checkLevel();
 }
 
 $(document).ready(init);
